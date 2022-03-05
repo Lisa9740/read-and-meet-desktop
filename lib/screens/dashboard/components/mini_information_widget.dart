@@ -56,15 +56,15 @@ class _MiniInformationWidgetState extends State<MiniInformationWidget> {
                   value: _value,
                   items: [
                     DropdownMenuItem(
-                      child: Text("Daily"),
+                      child: Text("Jour"),
                       value: 1,
                     ),
                     DropdownMenuItem(
-                      child: Text("Weekly"),
+                      child: Text("Semaine"),
                       value: 2,
                     ),
                     DropdownMenuItem(
-                      child: Text("Monthly"),
+                      child: Text("Mois"),
                       value: 3,
                     ),
                   ],

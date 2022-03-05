@@ -21,7 +21,7 @@ class RecentUsers extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Recent Candidates",
+            "Inscription(s) récente",
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SingleChildScrollView(
@@ -33,22 +33,22 @@ class RecentUsers extends StatelessWidget {
                 columnSpacing: defaultPadding,
                 columns: [
                   DataColumn(
-                    label: Text("Name Surname"),
+                    label: Text("Nom Prénom"),
                   ),
                   DataColumn(
-                    label: Text("Applied Position"),
+                    label: Text("Commune"),
                   ),
                   DataColumn(
                     label: Text("E-mail"),
                   ),
                   DataColumn(
-                    label: Text("Registration Date"),
+                    label: Text("Date d\'inscription"),
                   ),
                   DataColumn(
                     label: Text("Status"),
                   ),
                   DataColumn(
-                    label: Text("Operation"),
+                    label: Text("Opération"),
                   ),
                 ],
                 rows: List.generate(
@@ -107,14 +107,14 @@ DataRow recentUserDataRow(RecentUser userInfo, BuildContext context) {
         Row(
           children: [
             TextButton(
-              child: Text('View', style: TextStyle(color: greenColor)),
+              child: Text('Voir', style: TextStyle(color: greenColor)),
               onPressed: () {},
             ),
             SizedBox(
               width: 6,
             ),
             TextButton(
-              child: Text("Delete", style: TextStyle(color: Colors.redAccent)),
+              child: Text("Supprimer compte", style: TextStyle(color: Colors.redAccent)),
               onPressed: () {
                 showDialog(
                     context: context,

@@ -58,7 +58,7 @@ List<DailyInfoModel> dailyDatas =
 
 var dailyData = [
   {
-    "title": "Employee",
+    "title": "Utilisateurs",
     "volumeData": 1328,
     "icon": FlutterIcons.user_alt_faw5s,
     "totalStorage": "+ %20",
@@ -104,50 +104,7 @@ var dailyData = [
     ]
   },
   {
-    "title": "On Leave",
-    "volumeData": 1328,
-    "icon": FlutterIcons.message1_ant,
-    "totalStorage": "+ %5",
-    "color": Color(0xFFFFA113),
-    "percentage": 35,
-    "colors": [Color(0xfff12711), Color(0xfff5af19)],
-    "spots": [
-      FlSpot(
-        1,
-        1.3,
-      ),
-      FlSpot(
-        2,
-        1.0,
-      ),
-      FlSpot(
-        3,
-        4,
-      ),
-      FlSpot(
-        4,
-        1.5,
-      ),
-      FlSpot(
-        5,
-        1.0,
-      ),
-      FlSpot(
-        6,
-        3,
-      ),
-      FlSpot(
-        7,
-        1.8,
-      ),
-      FlSpot(
-        8,
-        1.5,
-      )
-    ]
-  },
-  {
-    "title": "Onboarding",
+    "title": "Messages",
     "volumeData": 1328,
     "icon": FlutterIcons.comment_alt_faw5s,
     "totalStorage": "+ %8",
@@ -190,7 +147,7 @@ var dailyData = [
     ]
   },
   {
-    "title": "Open Position",
+    "title": "Livres ajouté(s)",
     "volumeData": 1328,
     "icon": FlutterIcons.heart_faw5s,
     "totalStorage": "+ %8",
@@ -233,7 +190,7 @@ var dailyData = [
     ]
   },
   {
-    "title": "Efficiency",
+    "title": "Signalements",
     "volumeData": 5328,
     "icon": FlutterIcons.bell_faw5s,
     "totalStorage": "- %5",

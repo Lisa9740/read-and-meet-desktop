@@ -30,7 +30,7 @@ class Header extends StatelessWidget {
                 height: 8,
               ),
               Text(
-                "Wellcome to your dashboard",
+                "Bienvenue sur le dashboard ReadAndMeet",
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ],
@@ -89,7 +89,7 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        hintText: "Search",
+        hintText: "Rechercher",
         fillColor: secondaryColor,
         filled: true,
         border: OutlineInputBorder(
