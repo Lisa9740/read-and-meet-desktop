@@ -39,6 +39,9 @@ dependencies:
   fl_chart: ^0.45.1
   flutter_svg: ^1.0.3
   table_calendar: ^3.0.4
+  shared_preferences: ^0.5.5
+  top_snackbar_flutter: ^1.0.2
+  localstorage: ^4.0.0+1
 
 dev_dependencies:
   flutter_test:

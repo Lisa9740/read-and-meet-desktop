@@ -1,10 +1,14 @@
+import 'package:provider/provider.dart';
 import 'package:ram_admin/core/constants/color_constants.dart';
 import 'package:ram_admin/core/widgets/app_button_widget.dart';
 import 'package:ram_admin/core/widgets/input_widget.dart';
 import 'package:ram_admin/screens/home/home_screen.dart';
-import 'package:ram_admin/screens/login/components/slider_widget.dart';
+
 
 import 'package:flutter/material.dart';
+
+import '../../core/providers/auth.provider.dart';
+import '../../core/utils/notification.dart';
 
 class Login extends StatefulWidget {
   Login({required this.title});
@@ -109,137 +113,33 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     );
   }
 
-  Container _registerScreen(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      constraints: BoxConstraints(
-        minHeight: MediaQuery.of(context).size.height - 0.0,
-      ),
-      child: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            InputWidget(
-              keyboardType: TextInputType.emailAddress,
-              onSaved: (String? value) {
-                // This optional block of code can be used to run
-                // code when the user saves the form.
-              },
-              onChanged: (String? value) {
-                // This optional block of code can be used to run
-                // code when the user saves the form.
-              },
-              validator: (String? value) {
-                return (value != null && value.contains('@'))
-                    ? 'Do not use the @ char.'
-                    : null;
-              },
-
-              topLabel: "Name",
-
-              hintText: "Enter Name",
-              // prefixIcon: FlutterIcons.chevron_left_fea,
-            ),
-            SizedBox(height: 8.0),
-            InputWidget(
-              keyboardType: TextInputType.emailAddress,
-              onSaved: (String? value) {
-                // This optional block of code can be used to run
-                // code when the user saves the form.
-              },
-              onChanged: (String? value) {
-                // This optional block of code can be used to run
-                // code when the user saves the form.
-              },
-              validator: (String? value) {
-                return (value != null && value.contains('@'))
-                    ? 'Do not use the @ char.'
-                    : null;
-              },
-
-              topLabel: "Email",
-
-              hintText: "Enter E-mail",
-              // prefixIcon: FlutterIcons.chevron_left_fea,
-            ),
-            SizedBox(height: 8.0),
-            InputWidget(
-              topLabel: "Password",
-              obscureText: true,
-              hintText: "Enter Password",
-              onSaved: (String? uPassword) {},
-              onChanged: (String? value) {},
-              validator: (String? value) {},
-            ),
-            SizedBox(height: 24.0),
-            AppButton(
-              type: ButtonType.PRIMARY,
-              text: "Sign Up",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-              },
-            ),
-            SizedBox(height: 24.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    Text("Remember Me")
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 24.0),
-            Center(
-              child: Wrap(
-                runAlignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account?",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontWeight: FontWeight.w300),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (_isMoved) {
-                        _animationController!.reverse();
-                      } else {
-                        _animationController!.forward();
-                      }
-                      _isMoved = !_isMoved;
-                    },
-                    child: Text("Sign In",
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontWeight: FontWeight.w400, color: greenColor)),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   Container _loginScreen(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
+
+    _signIn(String email, pass, context) async {
+      Map data = {'email': email, 'password': pass};
+      try {
+        final response = await Provider.of<AuthApiProvider>(context, listen: false).login(data['email'], data['password']);
+
+        if (response != null) {
+          NotificationMsg.showSnackBar("Connexion réussi !", true, context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+        }else {
+          NotificationMsg.showSnackBar("Votre email et/ ou mot de passe est erroné !", false, context);
+        }
+      }catch(e){
+        print(e);
+        NotificationMsg.showSnackBar('Une erreur est survenue !', false, context);
+      }
+    }
+
+
     return Container(
       width: double.infinity,
       constraints: BoxConstraints(
@@ -250,6 +150,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             InputWidget(
+              kController: emailController,
               keyboardType: TextInputType.emailAddress,
               onSaved: (String? value) {
                 // This optional block of code can be used to run
@@ -272,6 +173,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             ),
             SizedBox(height: 8.0),
             InputWidget(
+              kController: passwordController,
               topLabel: "Mot de passe",
               obscureText: true,
               hintText: "Entrez votre mot de passe",
@@ -284,10 +186,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
               type: ButtonType.PRIMARY,
               text: "Se connecter",
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
+                _signIn(emailController.text, passwordController.text,
+                    context);
+
               },
             ),
             SizedBox(height: 24.0),
@@ -304,7 +205,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                         });
                       },
                     ),
-                    Text("Remember Me")
+                    Text("Se souvenir de moi")
                   ],
                 ),
                 GestureDetector(
@@ -319,38 +220,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ],
-            ),
-            SizedBox(height: 24.0),
-            Center(
-              child: Wrap(
-                runAlignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account yet?",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontWeight: FontWeight.w300),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (_isMoved) {
-                        _animationController!.reverse();
-                      } else {
-                        _animationController!.forward();
-                      }
-                      _isMoved = !_isMoved;
-                    },
-                    child: Text("Sign up",
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontWeight: FontWeight.w400, color: greenColor)),
-                  )
-                ],
-              ),
             ),
           ],
         ),

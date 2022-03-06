@@ -3,11 +3,14 @@ import 'package:ram_admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../models/user.dart';
+
 class Header extends StatelessWidget {
   const Header({
-    Key? key,
+    Key? key, required this.user
   }) : super(key: key);
 
+  final User user;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -23,7 +26,7 @@ class Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hello, Deniz 👋",
+                "Hello, ${user.name} 👋",
                 style: Theme.of(context).textTheme.headline6,
               ),
               SizedBox(

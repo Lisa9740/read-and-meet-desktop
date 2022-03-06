@@ -8,9 +8,12 @@ import 'package:ram_admin/screens/dashboard/components/recent_users.dart';
 import 'package:ram_admin/screens/dashboard/components/user_details_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/user.dart';
 import 'components/header.dart';
 
 class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({Key? key,  required this.user}) : super(key: key);
+  final User user;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +23,7 @@ class DashboardScreen extends StatelessWidget {
           padding: EdgeInsets.all(defaultPadding),
           child: Column(
             children: [
-              Header(),
+              Header(user: user),
               SizedBox(height: defaultPadding),
               MiniInformation(),
               SizedBox(height: defaultPadding),
