@@ -1,14 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:ram_admin/core/api.conf.dart';
 import 'package:ram_admin/core/utils/storage.dart';
 import 'package:ram_admin/models/profile.dart';
+import 'package:ram_admin/models/recent_user_model.dart';
 import 'package:ram_admin/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/daily_info_model.dart';
+import '../constants/color_constants.dart';
 import '../utils/shared.pref.dart';
 
 //import '../common/utils/shared.pref.dart';
@@ -22,6 +27,7 @@ class UserApiProvider with ChangeNotifier{
   User otherUser = User.empty;
   Profile currentProfile = Profile.empty;
   List<User> users = [];
+  List<DailyInfoModel> dailyInfo = [];
 
   Future<User> getCurrent() async{
     var data = await Storage().get("user");
@@ -101,24 +107,50 @@ class UserApiProvider with ChangeNotifier{
     }
   }
 
+
   Future<List<User>> fetchUsers() async {
     var headers = await ApiConf.getHeaders(authToken);
     String url = "${ApiConf.baseUrl}/users";
     try {
       var response = await http.get(Uri.parse(url), headers: headers);
-      return parseResponse(response);
+      print("test de fecthUsers ${response.body}");
+      List<User> users = parseResponse(response);
+      print("test de users ${users}");
+
+      return users;
     } catch (e) {
       return List<User>.empty();
     }
   }
 
 
-  Future<List<User>> parseResponse(http.Response response) async {
+  Future<List<RecentUser>> fetchRecentUsers() async {
+    var headers = await ApiConf.getHeaders(authToken);
+    String url = "${ApiConf.baseUrl}/users";
+    try {
+      var response = await http.get(Uri.parse(url), headers: headers);
+      List<User> users = parseResponse(response);
+      List<RecentUser> recentUsers = [];
+      users.forEach((element) {
+        recentUsers.add(RecentUser.fromJson(element.toMap()));
+      });
+
+      print("recentUser $recentUsers");
+      return recentUsers;
+    } catch (e) {
+      return List<RecentUser>.empty();
+    }
+  }
+
+
+
+
+  List<User> parseResponse(http.Response response) {
     final responseString = response.body;
     if (response.statusCode == successCode) {
       users = userFromJson(responseString);
       notifyListeners();
-      return userFromJson(responseString);
+      return users;
     } else {
       throw Exception('failed to load users');
     }

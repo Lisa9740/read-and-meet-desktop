@@ -80,7 +80,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                             child: Stack(
                               children: [
                                  Stack(
-                                      fit: StackFit.loose,
+                                      fit: StackFit.expand,
                                       clipBehavior: Clip.none,
                                       children: [
                                         _loginScreen(context),
@@ -141,7 +141,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
 
     return Container(
-      width: double.infinity,
+      width: 500,
       constraints: BoxConstraints(
         minHeight: MediaQuery.of(context).size.height - 0.0,
       ),
@@ -191,7 +191,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
               },
             ),
-            SizedBox(height: 24.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

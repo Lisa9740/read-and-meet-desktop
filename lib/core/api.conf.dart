@@ -2,14 +2,15 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:ram_admin/core/utils/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiConf {
   //static String baseUrl = "http://readandmeet-backend.barret-alison-dev.xyz/api";
- static String baseUrl ="http://rad-backend.barret-alison-dev.xyz/api";
- static String mainBaseUrl ="http://rad-backend.barret-alison-dev.xyz";
- // static String mainBaseUrl ="http://10.0.2.2:8000";
- // static String baseUrl ="http://10.0.2.2:8000/api";
+// static String baseUrl ="http://rad-backend.barret-alison-dev.xyz/api";
+ //static String mainBaseUrl ="http://rad-backend.barret-alison-dev.xyz";
+ static String mainBaseUrl ="http:///127.0.0.1:8000";
+ static String baseUrl ="http://127.0.0.1:8000/api";
 
   static String socketUrl = "http://10.0.2.2:6000";
 //  static String socketUrl = "http://rad-backend-ws.barret-alison-dev.xyz";
@@ -24,8 +25,7 @@ class ApiConf {
   }
   // get token from localStorage;
   static getToken() async{
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    var token = _prefs.getString('token');
+    var token  = await Storage().get('token');
     return token;
   }
 

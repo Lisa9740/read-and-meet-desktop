@@ -13,6 +13,7 @@ class User{
   int profileId;
   String gender;
   String age;
+  var createdAt;
 
   User({
     required this.id,
@@ -21,7 +22,8 @@ class User{
     required this.userPicture,
     required this.age,
     required this.gender,
-    required this.profileId
+    required this.profileId,
+    required this.createdAt
   });
 
   static final empty = User(
@@ -31,7 +33,8 @@ class User{
       gender: "",
       age: "" ,
       userPicture: "",
-      profileId: 0
+      profileId: 0,
+      createdAt: new DateTime.now()
   );
 
   factory User.fromJson( Map<String, dynamic> json) {
@@ -43,7 +46,8 @@ class User{
           age: json['user']['age'],
           gender: json['user']['gender'],
           userPicture: json['user']['user_picture'],
-          profileId: json['user']['profile_id']
+          profileId: json['user']['profile_id'],
+          createdAt: json['user']['created_at']
       );
     }
     return User(
@@ -53,7 +57,8 @@ class User{
         age : json['age'],
         gender: json['gender'],
         userPicture: json['user_picture'],
-        profileId: json['profile_id']
+        profileId: json['profile_id'],
+        createdAt: json['created_at']
     );
   }
 
@@ -66,6 +71,7 @@ class User{
       'genre' : gender,
       'userPicture': userPicture,
       'account': profileId,
+      'createdAt' : createdAt.toString()
     };
   }
 }

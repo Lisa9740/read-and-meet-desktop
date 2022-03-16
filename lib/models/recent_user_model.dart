@@ -1,8 +1,21 @@
+import 'dart:core';
+
 class RecentUser {
-  final String? icon, name, date, posts, role, email;
+  String? icon, name, posts, role, email;
+   var date;
 
   RecentUser(
-      {this.icon, this.name, this.date, this.posts, this.role, this.email});
+      {this.icon, this.name, required this.date, this.posts, this.role, this.email});
+
+  RecentUser.fromJson(Map<String, dynamic> json) {
+    icon = json['userPicture'];
+    name = json['name'];
+    date = json['createdAt'];
+    posts =  '[]';
+    role = "User";
+    email = json['email'];
+  }
+
 }
 
 List recentUsers = [
@@ -11,7 +24,7 @@ List recentUsers = [
     name: "Deniz Çolak",
     role: "Software Architect",
     email: "de***ak@huawei.com",
-    date: "01-03-2021",
+    date: DateTime(01-03-2021),
     posts: "4",
   ),
   RecentUser(
@@ -19,7 +32,7 @@ List recentUsers = [
     name: "S*** Ç****",
     role: "Software Engineer",
     email: "se****k1@google.com",
-    date: "27-02-2021",
+    date:  DateTime(01-03-2021),
     posts: "19",
   ),
   RecentUser(
@@ -27,7 +40,7 @@ List recentUsers = [
     name: "N***** D****",
     role: "Solution Architect",
     email: "ne****tr@google.com",
-    date: "23-02-2021",
+    date:  DateTime(01-03-2021),
     posts: "32",
   ),
   RecentUser(
@@ -35,7 +48,7 @@ List recentUsers = [
     name: "B***** K****",
     role: "Project Manager",
     email: "bu****lk@google.com",
-    date: "21-02-2021",
+    date:  DateTime(01-03-2021),
     posts: "3",
   ),
   RecentUser(
@@ -43,7 +56,7 @@ List recentUsers = [
     name: "A**** S**** K****",
     role: "Line Manager",
     email: "ah****az@google.com",
-    date: "23-02-2021",
+    date: DateTime(23-02-2021),
     posts: "2",
   ),
   RecentUser(
@@ -51,7 +64,7 @@ List recentUsers = [
     name: "T***** S****",
     role: "UI/UX Designer",
     email: "te****cu@google.com",
-    date: "25-02-2021",
+    date:  DateTime(01-03-2021),
     posts: "3",
   ),
   RecentUser(
@@ -59,7 +72,7 @@ List recentUsers = [
     name: "K***** D****",
     role: "Business Analyst",
     email: "ke****an@gmail.com",
-    date: "25-02-2021",
+    date:  DateTime(01-03-2021),
     posts: "34",
   ),
 ];

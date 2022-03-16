@@ -2,7 +2,7 @@ import 'package:localstorage/localstorage.dart';
 
 class Storage {
   static final Storage _storage = Storage._internal();
-  static LocalStorage storage = LocalStorage('storage_app');
+  static LocalStorage storage = LocalStorage('storage_app_desktop');
 
   factory Storage(){
     return _storage;

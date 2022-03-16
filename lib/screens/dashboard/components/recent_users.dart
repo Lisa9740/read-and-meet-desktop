@@ -1,8 +1,11 @@
+import 'package:provider/provider.dart';
 import 'package:ram_admin/core/constants/color_constants.dart';
 import 'package:ram_admin/core/utils/colorful_tag.dart';
 import 'package:ram_admin/models/recent_user_model.dart';
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/providers/user.provider.dart';
 
 class RecentUsers extends StatelessWidget {
   const RecentUsers({
@@ -11,6 +14,13 @@ class RecentUsers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<RecentUser> recentUsers = [];
+
+    getRecentUsers() async{
+      recentUsers = await Provider.of<UserApiProvider>(context, listen: false).fetchRecentUsers();
+      return recentUsers;
+    }
+
     return Container(
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -26,37 +36,46 @@ class RecentUsers extends StatelessWidget {
           ),
           SingleChildScrollView(
             //scrollDirection: Axis.horizontal,
-            child: SizedBox(
-              width: double.infinity,
-              child: DataTable(
-                horizontalMargin: 0,
-                columnSpacing: defaultPadding,
-                columns: [
-                  DataColumn(
-                    label: Text("Nom Prénom"),
-                  ),
-                  DataColumn(
-                    label: Text("Commune"),
-                  ),
-                  DataColumn(
-                    label: Text("E-mail"),
-                  ),
-                  DataColumn(
-                    label: Text("Date d\'inscription"),
-                  ),
-                  DataColumn(
-                    label: Text("Status"),
-                  ),
-                  DataColumn(
-                    label: Text("Opération"),
-                  ),
-                ],
-                rows: List.generate(
-                  recentUsers.length,
-                  (index) => recentUserDataRow(recentUsers[index], context),
-                ),
-              ),
-            ),
+              child:  FutureBuilder<List>(
+                future: getRecentUsers(),
+                  builder: (context, projectSnap) {
+                    if (projectSnap.connectionState == ConnectionState.none &&
+                        projectSnap.hasData == null) {
+                      return Container();
+                    }
+                    print("test ${projectSnap.data}");
+                    return SizedBox(
+                      width: double.infinity,
+                      child: DataTable(
+                        horizontalMargin: 0,
+                        columnSpacing: defaultPadding,
+                        columns: [
+                          DataColumn(
+                            label: Text("Nom Prénom"),
+                          ),
+                          DataColumn(
+                            label: Text("Statut"),
+                          ),
+                          DataColumn(
+                            label: Text("E-mail"),
+                          ),
+                          DataColumn(
+                            label: Text("Date d\'inscription"),
+                          ),
+                          DataColumn(
+                            label: Text("Annonces"),
+                          ),
+                          DataColumn(
+                            label: Text("Opération"),
+                          ),
+                        ],
+                        rows: List.generate(
+                          projectSnap.data!.length,
+                              (index) => recentUserDataRow(projectSnap.data![index], context),
+                        ),
+                      ),
+                    );
+                  })
           ),
         ],
       ),
@@ -65,6 +84,7 @@ class RecentUsers extends StatelessWidget {
 }
 
 DataRow recentUserDataRow(RecentUser userInfo, BuildContext context) {
+  print("recentUser ${userInfo.name}");
   return DataRow(
     cells: [
       DataCell(
@@ -97,11 +117,11 @@ DataRow recentUserDataRow(RecentUser userInfo, BuildContext context) {
             color: getRoleColor(userInfo.role).withOpacity(.2),
             border: Border.all(color: getRoleColor(userInfo.role)),
             borderRadius: BorderRadius.all(Radius.circular(5.0) //
-                ),
+            ),
           ),
           child: Text(userInfo.role!))),
       DataCell(Text(userInfo.email!)),
-      DataCell(Text(userInfo.date!)),
+      DataCell(Text(userInfo.date.toString())),
       DataCell(Text(userInfo.posts!)),
       DataCell(
         Row(

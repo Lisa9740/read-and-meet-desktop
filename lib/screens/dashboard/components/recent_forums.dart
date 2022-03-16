@@ -63,7 +63,7 @@ DataRow recentUserDataRow(RecentUser userInfo) {
                 ),
           ),
           child: Text(userInfo.role!))),
-      DataCell(Text(userInfo.date!)),
+      DataCell(Text(userInfo.date.toString())),
       DataCell(Text(userInfo.posts!)),
     ],
   );
