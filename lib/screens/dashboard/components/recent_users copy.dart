@@ -103,7 +103,7 @@ DataRow recentUserDataRow(RecentUser userInfo, BuildContext context) {
           child: Text(userInfo.role!))),
       DataCell(Text(userInfo.email!)),
       DataCell(Text(userInfo.date.toString())),
-      DataCell(Text(userInfo.posts!)),
+      DataCell(Text(userInfo.posts!.toString())),
       DataCell(
         Row(
           children: [

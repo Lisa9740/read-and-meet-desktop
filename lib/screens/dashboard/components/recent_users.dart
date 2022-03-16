@@ -1,3 +1,5 @@
+import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ram_admin/core/constants/color_constants.dart';
 import 'package:ram_admin/core/utils/colorful_tag.dart';
@@ -63,7 +65,7 @@ class RecentUsers extends StatelessWidget {
                             label: Text("Date d\'inscription"),
                           ),
                           DataColumn(
-                            label: Text("Annonces"),
+                            label: Text("Annonce(s) postée(s)"),
                           ),
                           DataColumn(
                             label: Text("Opération"),
@@ -85,6 +87,8 @@ class RecentUsers extends StatelessWidget {
 
 DataRow recentUserDataRow(RecentUser userInfo, BuildContext context) {
   print("recentUser ${userInfo.name}");
+
+  var date = DateFormat.yMMMEd().format(DateTime.parse(userInfo.date!));
   return DataRow(
     cells: [
       DataCell(
@@ -121,8 +125,8 @@ DataRow recentUserDataRow(RecentUser userInfo, BuildContext context) {
           ),
           child: Text(userInfo.role!))),
       DataCell(Text(userInfo.email!)),
-      DataCell(Text(userInfo.date.toString())),
-      DataCell(Text(userInfo.posts!)),
+      DataCell(Text(date.toString())),
+      DataCell(Text(userInfo.posts!.length.toString())),
       DataCell(
         Row(
           children: [
@@ -134,7 +138,7 @@ DataRow recentUserDataRow(RecentUser userInfo, BuildContext context) {
               width: 6,
             ),
             TextButton(
-              child: Text("Supprimer compte", style: TextStyle(color: Colors.redAccent)),
+              child: Text("Désactiver compte", style: TextStyle(color: Colors.redAccent)),
               onPressed: () {
                 showDialog(
                     context: context,

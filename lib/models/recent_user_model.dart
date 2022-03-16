@@ -1,18 +1,19 @@
 import 'dart:core';
 
 class RecentUser {
-  String? icon, name, posts, role, email;
+  String? icon, name, role, email;
+  List? posts;
    var date;
 
   RecentUser(
-      {this.icon, this.name, required this.date, this.posts, this.role, this.email});
+      {this.icon, this.name, required this.date, required this.posts, this.role, this.email});
 
   RecentUser.fromJson(Map<String, dynamic> json) {
     icon = json['userPicture'];
     name = json['name'];
     date = json['createdAt'];
-    posts =  '[]';
-    role = "User";
+    posts = json['posts'];
+    role = "Utilisateurs";
     email = json['email'];
   }
 
@@ -25,7 +26,7 @@ List recentUsers = [
     role: "Software Architect",
     email: "de***ak@huawei.com",
     date: DateTime(01-03-2021),
-    posts: "4",
+    posts: [],
   ),
   RecentUser(
     icon: "assets/icons/Figma_file.svg",
@@ -33,7 +34,7 @@ List recentUsers = [
     role: "Software Engineer",
     email: "se****k1@google.com",
     date:  DateTime(01-03-2021),
-    posts: "19",
+    posts: [],
   ),
   RecentUser(
     icon: "assets/icons/doc_file.svg",
@@ -41,7 +42,7 @@ List recentUsers = [
     role: "Solution Architect",
     email: "ne****tr@google.com",
     date:  DateTime(01-03-2021),
-    posts: "32",
+    posts: [],
   ),
   RecentUser(
     icon: "assets/icons/sound_file.svg",
@@ -49,7 +50,7 @@ List recentUsers = [
     role: "Project Manager",
     email: "bu****lk@google.com",
     date:  DateTime(01-03-2021),
-    posts: "3",
+    posts: [],
   ),
   RecentUser(
     icon: "assets/icons/media_file.svg",
@@ -57,7 +58,7 @@ List recentUsers = [
     role: "Line Manager",
     email: "ah****az@google.com",
     date: DateTime(23-02-2021),
-    posts: "2",
+    posts: [],
   ),
   RecentUser(
     icon: "assets/icons/pdf_file.svg",
@@ -65,7 +66,7 @@ List recentUsers = [
     role: "UI/UX Designer",
     email: "te****cu@google.com",
     date:  DateTime(01-03-2021),
-    posts: "3",
+    posts: [],
   ),
   RecentUser(
     icon: "assets/icons/excle_file.svg",
@@ -73,6 +74,6 @@ List recentUsers = [
     role: "Business Analyst",
     email: "ke****an@gmail.com",
     date:  DateTime(01-03-2021),
-    posts: "34",
+    posts: [],
   ),
 ];

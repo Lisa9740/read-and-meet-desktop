@@ -3,7 +3,6 @@ import 'package:ram_admin/responsive.dart';
 
 import 'package:ram_admin/screens/dashboard/components/mini_information_card.dart';
 
-import 'package:ram_admin/screens/dashboard/components/recent_forums.dart';
 import 'package:ram_admin/screens/dashboard/components/recent_users.dart';
 import 'package:ram_admin/screens/dashboard/components/user_details_widget.dart';
 import 'package:flutter/material.dart';

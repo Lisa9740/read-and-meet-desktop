@@ -44,7 +44,7 @@ class MiniInformation extends StatelessWidget {
               },
               icon: Icon(Icons.add),
               label: Text(
-                "Add New",
+                "Ajouter nouveau",
               ),
             ),
           ],

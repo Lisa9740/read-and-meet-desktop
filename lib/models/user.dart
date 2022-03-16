@@ -13,6 +13,7 @@ class User{
   int profileId;
   String gender;
   String age;
+  List posts;
   var createdAt;
 
   User({
@@ -23,6 +24,7 @@ class User{
     required this.age,
     required this.gender,
     required this.profileId,
+    required this.posts,
     required this.createdAt
   });
 
@@ -34,6 +36,7 @@ class User{
       age: "" ,
       userPicture: "",
       profileId: 0,
+      posts: [],
       createdAt: new DateTime.now()
   );
 
@@ -47,6 +50,7 @@ class User{
           gender: json['user']['gender'],
           userPicture: json['user']['user_picture'],
           profileId: json['user']['profile_id'],
+          posts: json['user']['posts'],
           createdAt: json['user']['created_at']
       );
     }
@@ -58,6 +62,7 @@ class User{
         gender: json['gender'],
         userPicture: json['user_picture'],
         profileId: json['profile_id'],
+        posts: json['posts'],
         createdAt: json['created_at']
     );
   }
@@ -71,6 +76,7 @@ class User{
       'genre' : gender,
       'userPicture': userPicture,
       'account': profileId,
+      'posts': posts,
       'createdAt' : createdAt.toString()
     };
   }

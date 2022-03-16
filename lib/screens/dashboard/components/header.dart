@@ -41,7 +41,7 @@ class Header extends StatelessWidget {
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
         Expanded(child: SearchField()),
-        ProfileCard()
+        ProfileCard(user: user)
       ],
     );
   }
@@ -49,11 +49,16 @@ class Header extends StatelessWidget {
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({
-    Key? key,
+    Key? key, required this.user
   }) : super(key: key);
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
+
+
+    print(user.userPicture);
     return Container(
       margin: EdgeInsets.only(left: defaultPadding),
       padding: EdgeInsets.symmetric(
@@ -68,13 +73,13 @@ class ProfileCard extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("assets/images/profile_pic.png"),
+            backgroundImage: NetworkImage(user.userPicture.toString()),
           ),
           if (!Responsive.isMobile(context))
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Deniz Çolak"),
+              child: Text(user.name.toString()),
             ),
           Icon(Icons.keyboard_arrow_down),
         ],
