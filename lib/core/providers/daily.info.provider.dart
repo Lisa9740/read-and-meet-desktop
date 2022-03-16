@@ -3,11 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:ram_admin/core/providers/user.provider.dart';
+import 'package:ram_admin/models/chat.message.dart';
 import 'package:ram_admin/models/user.dart';
 
-
+import '../../models/book.dart';
 import '../../models/daily_info_model.dart';
 import '../constants/color_constants.dart';
+import 'book.api.provider.dart';
+import 'messages.api.provider.dart';
 
 
 class DailyInfoProvider with ChangeNotifier{
@@ -15,7 +18,7 @@ class DailyInfoProvider with ChangeNotifier{
   DailyInfoProvider({this.authToken});
 
   final successCode = 200;
-  List<DailyInfoModel> dailyInfo = [];
+  //List<DailyInfoModel> dailyInfo = [];
 
 
   Future<DailyInfoModel> userDailyInfo(List<User> users) async{
@@ -34,22 +37,22 @@ class DailyInfoProvider with ChangeNotifier{
     });
   }
 
-  bookDailyInfo() {
+  bookDailyInfo(List<Book> books) {
     return DailyInfoModel.fromJson({
       "title": "Livres ajouté(s)",
-      "volumeData": 1328,
+      "volumeData": books.length,
       "icon": FlutterIcons.heart_faw5s,
-      "totalStorage": "+ %8",
+      "totalStorage": "",
       "color": Color(0xFFd50000),
       "percentage": 10,
       "colors": [Color(0xff93291E), Color(0xffED213A)],
       "spots":List<FlSpot>.empty()});
   }
 
-  messagesDailyInfo()  {
+  messagesDailyInfo(List<ChatMessage> messages)  {
     return DailyInfoModel.fromJson({
       "title": "Messages",
-      "volumeData": 1328,
+      "volumeData": messages.length,
       "icon": FlutterIcons.comment_alt_faw5s,
       "totalStorage": "+ %8",
       "color": Color(0xFFA4CDFF),
@@ -60,16 +63,20 @@ class DailyInfoProvider with ChangeNotifier{
 
   Future<List<DailyInfoModel>> fetchDailyInfo(context) async {
     List<User> users =  await Provider.of<UserApiProvider>(context, listen: false).fetchUsers();
+    List<ChatMessage> messages = await Provider.of<ChatMessageApiProvider>(context, listen: false).getMessages();
+    List<Book> books = await Provider.of<BookApiProvider>(context, listen: false).getBooks();
 
+
+    List<DailyInfoModel> dailyInfo = [];
     if (users.isNotEmpty) {
       for (int i = 0; i < 3; i++) {
         print("i $i");
         if (i == 0) {
           dailyInfo.add(await userDailyInfo(users));
         } else if (i == 1) {
-          dailyInfo.add(await messagesDailyInfo());
+          dailyInfo.add(await messagesDailyInfo(messages));
         } else {
-          dailyInfo.add(await bookDailyInfo());
+          dailyInfo.add(await bookDailyInfo(books));
         }
       }
     }

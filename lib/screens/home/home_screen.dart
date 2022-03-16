@@ -3,7 +3,6 @@ import 'package:ram_admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:ram_admin/screens/dashboard/dashboard_screen.dart';
 
-import '../../core/widgets/render.current.user.data.dart';
 import '../../models/user.dart';
 import '../login/login_screen.dart';
 import 'components/side_menu.dart';
@@ -29,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-
     autoLogIn(context) async {
       var user = await Storage().get("user");
 
@@ -42,9 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
         return;
       }
     }
-
-
-
 
     if (!isLoggedIn) {
       print(isLoggedIn);
@@ -62,9 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return view(currentUser);
     }
-
-
-
   }
 
   view(User user) {

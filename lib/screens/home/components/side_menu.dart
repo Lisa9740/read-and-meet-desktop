@@ -1,6 +1,7 @@
 import 'package:ram_admin/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ram_admin/screens/posts/post_screen.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -39,7 +40,12 @@ class SideMenu extends StatelessWidget {
             DrawerListTile(
               title: "Annonces postés",
               svgSrc: "assets/icons/menu_tran.svg",
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PostsScreen()),
+                );
+              },
             ),
             DrawerListTile(
               title: "Livres",

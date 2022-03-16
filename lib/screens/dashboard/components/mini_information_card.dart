@@ -78,9 +78,14 @@ class InformationCard extends StatelessWidget {
   List infos = [];
 
   Future<List> getDailyInfo(context) async {
+
     infos = await Provider.of<DailyInfoProvider>(context, listen: false).fetchDailyInfo(
         context);
-    return infos;
+    if (infos.length == 3) {
+      return infos;
+    }
+    var data = infos.take(3).toList();
+    return data;
   }
 
   @override
